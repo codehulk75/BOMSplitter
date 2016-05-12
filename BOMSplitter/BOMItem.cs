@@ -39,11 +39,6 @@ namespace BOMSplitter
             m_Notes = notes;
         }
 
-        public BOMItem(int FindNum)
-        {
-            m_OrigFindNum = FindNum;
-        }
-
         public int QtySplitOne
         {
             get

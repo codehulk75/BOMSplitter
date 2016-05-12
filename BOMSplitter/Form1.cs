@@ -113,6 +113,21 @@ namespace BOMSplitter
             }
             return dt;
         }
+
+        private object[,] DataTableToArray(System.Data.DataTable dt)
+        {
+            object[,] arr = new object[dt.Rows.Count, dt.Columns.Count];
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];          
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    arr[i,j] = dr[j];
+                }
+            }
+            return arr;
+        }
         private void closeButton_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
@@ -126,17 +141,12 @@ namespace BOMSplitter
                 m_ExpBook = m_ExportBOMExcelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
                 Worksheet exportSheet = m_ExpBook.Worksheets[1];
 
-                for (int col = 0; col < m_BOMData.Columns.Count; col++)
-                {
-                    for (int row = 0; row < m_BOMData.Rows.Count; row++)
-                    {
-                        exportSheet.Cells[row + 1, col + 1] = m_BOMData.Rows[row].ItemArray[col];
-                    }
-                }
-                //microsoft.office.interop.excel.range firstcell = (microsoft.office.interop.excel.range)exportsheet.cells["a1"];
-                //microsoft.office.interop.excel.range lastcell = (microsoft.office.interop.excel.range)exportsheet.cells[m_bomdata.rows.count, m_bomdata.columns.count];
-                //microsoft.office.interop.excel.range targetrange = (microsoft.office.interop.excel.range)exportsheet.range[firstcell, lastcell];
-                //targetrange.value = m_bomdata;
+                //copy to new Excel workbook and prompt user to save
+                object[,] arr = DataTableToArray(m_BOMData);
+                Microsoft.Office.Interop.Excel.Range firstcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[1,1];
+                Microsoft.Office.Interop.Excel.Range lastcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[m_BOMData.Rows.Count, m_BOMData.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range targetrange = (Microsoft.Office.Interop.Excel.Range)exportSheet.Range[firstcell, lastcell];
+                targetrange.Value = arr;
 
                 // Clean up.
                 m_ExpBook.Close(true);
@@ -243,9 +253,21 @@ namespace BOMSplitter
                     foreach (DataRow row in foundRows)
                     {
                         int index = m_BOMData.Rows.IndexOf(row);
-                        m_BOMData.Rows[index]["FindNum"] = foundParts[0].FirstNewFNum;
-                        m_BOMData.Rows[index]["RefDes"] = foundParts[0].FirstSplitLine;
-                        m_BOMData.Rows[index]["Qty"] = foundParts[0].QtySplitOne;
+                        bomGridView.Rows[index].DefaultCellStyle.BackColor = Color.Red;
+
+                        DataRow splitLine1 = m_BOMData.NewRow();
+                        splitLine1["Level"] = m_BOMData.Rows[index]["Level"];
+                        splitLine1["SubClass"] = m_BOMData.Rows[index]["SubClass"];
+                        splitLine1["BEInum"] = m_BOMData.Rows[index]["BEInum"];
+                        splitLine1["RevECO"] = m_BOMData.Rows[index]["RevECO"];
+                        splitLine1["Description"] = m_BOMData.Rows[index]["Description"];
+                        splitLine1["FindNum"] = foundParts[0].FirstNewFNum;
+                        splitLine1["Qty"] = foundParts[0].QtySplitOne;
+                        splitLine1["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
+                        splitLine1["RefDes"] = foundParts[0].FirstSplitLine;
+                        splitLine1["Notes"] = m_BOMData.Rows[index]["Notes"];
+                        m_BOMData.Rows.InsertAt(splitLine1, index + 1);
+
                         DataRow splitLine2 = m_BOMData.NewRow();
                         splitLine2["Level"] = m_BOMData.Rows[index]["Level"];
                         splitLine2["SubClass"] = m_BOMData.Rows[index]["SubClass"];
@@ -257,10 +279,11 @@ namespace BOMSplitter
                         splitLine2["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
                         splitLine2["RefDes"] = foundParts[0].SecondSplitLine;
                         splitLine2["Notes"] = m_BOMData.Rows[index]["Notes"];
-                        m_BOMData.Rows.InsertAt(splitLine2, index+1);
+                        m_BOMData.Rows.InsertAt(splitLine2, index+2);
                     }
                 }
             }
         }
+
     }
 }

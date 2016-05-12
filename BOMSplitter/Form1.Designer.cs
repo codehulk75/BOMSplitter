@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.bomFileLabel = new System.Windows.Forms.Label();
             this.bomFileTextBox = new System.Windows.Forms.TextBox();
             this.openFileButton = new System.Windows.Forms.Button();
@@ -73,12 +74,15 @@
             // 
             // bomGridView
             // 
+            this.bomGridView.AllowUserToAddRows = false;
+            this.bomGridView.AllowUserToDeleteRows = false;
             this.bomGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bomGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.bomGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bomGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.bomGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.bomGridView.Location = new System.Drawing.Point(15, 83);
             this.bomGridView.Name = "bomGridView";
             this.bomGridView.Size = new System.Drawing.Size(764, 351);
@@ -143,6 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(791, 471);
             this.Controls.Add(this.doSplitsButton);
             this.Controls.Add(this.splitFileButton);
@@ -153,6 +158,7 @@
             this.Controls.Add(this.openFileButton);
             this.Controls.Add(this.bomFileTextBox);
             this.Controls.Add(this.bomFileLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "BOM Splitter";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

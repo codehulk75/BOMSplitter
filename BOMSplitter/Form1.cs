@@ -146,6 +146,7 @@ namespace BOMSplitter
                 m_ExportBOMExcelApp = new Microsoft.Office.Interop.Excel.Application();
                 m_ExpBook = m_ExportBOMExcelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
                 Worksheet exportSheet = m_ExpBook.Worksheets[1];
+                exportSheet.Cells.NumberFormat = "@";
 
                 //copy to new Excel workbook and prompt user to save
                 object[,] arr = DataTableToArray(m_OutputBOM);

@@ -22,7 +22,8 @@ namespace BOMSplitter
         }
         private string m_BOMExplosionFileName = null;
         private string m_SplitFileName = null;
-        private System.Data.DataTable m_BOMData; //BOM Explosion converted to from valarray to datatable, work with this copy, valarray should stay constant
+        private System.Data.DataTable m_BOMData; //BOM Explosion converted to from valarray to datatable, this is for GUI display of the pre/post split BOM
+        private System.Data.DataTable m_OutputBOM; //Tracks m_BOMData, but without original 'pre-split' lines, this is final user output
         private List<string> m_FoundPrevSplits = new List<string>(); //will contain a list of any part numbers found to be already split on original BOM, therefore not processed
         //m_Splits is read in from split file and holds all the Info needed to edit the orginal BOM
         private Dictionary<string, List<string>> m_Splits = new Dictionary<string, List<string>>(); //key = pn, value=2 strings containing top and bot ref des
@@ -79,9 +80,14 @@ namespace BOMSplitter
                 bomFileTextBox.Text = m_BOMExplosionFileName;
                 ExcelReaderInterop rdr = new ExcelReaderInterop();
                 rdr.ExcelOpenSpreadsheets(m_BOMExplosionFileName);
-                m_BOMData = ArrayToDataTable(rdr.M_ValueArray); //populate the editable copy of the BOM, include all lines from BOM Explosion
+                m_BOMData = ArrayToDataTable(rdr.ValueArray); //populate the editable copy of the BOM, include all lines from BOM Explosion
                 m_BOMData.TableName = "BOM";
                 bomGridView.DataSource = m_BOMData;
+
+                //set output bom to same data as m_BOMData
+                m_OutputBOM = ArrayToDataTable(rdr.ValueArray);
+                m_OutputBOM.TableName = "BOM";
+
                 GetBOMParts(); //Populate list of BOMItems with only lines from BOM that are in the 'Part' category
             }
         }
@@ -142,9 +148,9 @@ namespace BOMSplitter
                 Worksheet exportSheet = m_ExpBook.Worksheets[1];
 
                 //copy to new Excel workbook and prompt user to save
-                object[,] arr = DataTableToArray(m_BOMData);
+                object[,] arr = DataTableToArray(m_OutputBOM);
                 Microsoft.Office.Interop.Excel.Range firstcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[1,1];
-                Microsoft.Office.Interop.Excel.Range lastcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[m_BOMData.Rows.Count, m_BOMData.Columns.Count];
+                Microsoft.Office.Interop.Excel.Range lastcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[m_OutputBOM.Rows.Count, m_OutputBOM.Columns.Count];
                 Microsoft.Office.Interop.Excel.Range targetrange = (Microsoft.Office.Interop.Excel.Range)exportSheet.Range[firstcell, lastcell];
                 targetrange.Value = arr;
 
@@ -247,43 +253,73 @@ namespace BOMSplitter
                 }
                 if (foundParts[0].SplitPart(splitPNData.Key, splitPNData.Value) == true)
                 {
-                    //make a new datatable or does datatable have decent find/replace option?
-                    string expression = "BEInum='" + foundParts[0].PartNumber + "'";
-                    DataRow[] foundRows = m_BOMData.Select(expression);
-                    foreach (DataRow row in foundRows)
-                    {
-                        int index = m_BOMData.Rows.IndexOf(row);
-                        bomGridView.Rows[index].DefaultCellStyle.BackColor = Color.Red;
-
-                        DataRow splitLine1 = m_BOMData.NewRow();
-                        splitLine1["Level"] = m_BOMData.Rows[index]["Level"];
-                        splitLine1["SubClass"] = m_BOMData.Rows[index]["SubClass"];
-                        splitLine1["BEInum"] = m_BOMData.Rows[index]["BEInum"];
-                        splitLine1["RevECO"] = m_BOMData.Rows[index]["RevECO"];
-                        splitLine1["Description"] = m_BOMData.Rows[index]["Description"];
-                        splitLine1["FindNum"] = foundParts[0].FirstNewFNum;
-                        splitLine1["Qty"] = foundParts[0].QtySplitOne;
-                        splitLine1["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
-                        splitLine1["RefDes"] = foundParts[0].FirstSplitLine;
-                        splitLine1["Notes"] = m_BOMData.Rows[index]["Notes"];
-                        m_BOMData.Rows.InsertAt(splitLine1, index + 1);
-
-                        DataRow splitLine2 = m_BOMData.NewRow();
-                        splitLine2["Level"] = m_BOMData.Rows[index]["Level"];
-                        splitLine2["SubClass"] = m_BOMData.Rows[index]["SubClass"];
-                        splitLine2["BEInum"] = m_BOMData.Rows[index]["BEInum"];
-                        splitLine2["RevECO"] = m_BOMData.Rows[index]["RevECO"];
-                        splitLine2["Description"] = m_BOMData.Rows[index]["Description"];
-                        splitLine2["FindNum"] = foundParts[0].SecondNewFNum;
-                        splitLine2["Qty"] = foundParts[0].QtySplitTwo;
-                        splitLine2["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
-                        splitLine2["RefDes"] = foundParts[0].SecondSplitLine;
-                        splitLine2["Notes"] = m_BOMData.Rows[index]["Notes"];
-                        m_BOMData.Rows.InsertAt(splitLine2, index+2);
-                    }
+                    UpdateGUIBOM(foundParts[0]);
+                    UpdateOutputBOM(foundParts[0]);                                
                 }
             }
         }
 
+        private void UpdateGUIBOM(BOMItem bomItem)
+        {
+            string expression = "BEInum='" + bomItem.PartNumber + "'";
+            DataRow[] foundRows = m_BOMData.Select(expression);
+            foreach (DataRow row in foundRows)
+            {
+                int index = m_BOMData.Rows.IndexOf(row);
+                bomGridView.Rows[index].DefaultCellStyle.BackColor = Color.Red;
+
+                DataRow splitLine1 = m_BOMData.NewRow();
+                splitLine1["Level"] = m_BOMData.Rows[index]["Level"];
+                splitLine1["SubClass"] = m_BOMData.Rows[index]["SubClass"];
+                splitLine1["BEInum"] = m_BOMData.Rows[index]["BEInum"];
+                splitLine1["RevECO"] = m_BOMData.Rows[index]["RevECO"];
+                splitLine1["Description"] = m_BOMData.Rows[index]["Description"];
+                splitLine1["FindNum"] = bomItem.FirstNewFNum;
+                splitLine1["Qty"] = bomItem.QtySplitOne;
+                splitLine1["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
+                splitLine1["RefDes"] = bomItem.FirstSplitLine;
+                splitLine1["Notes"] = m_BOMData.Rows[index]["Notes"];
+                m_BOMData.Rows.InsertAt(splitLine1, index + 1);
+
+                DataRow splitLine2 = m_BOMData.NewRow();
+                splitLine2["Level"] = m_BOMData.Rows[index]["Level"];
+                splitLine2["SubClass"] = m_BOMData.Rows[index]["SubClass"];
+                splitLine2["BEInum"] = m_BOMData.Rows[index]["BEInum"];
+                splitLine2["RevECO"] = m_BOMData.Rows[index]["RevECO"];
+                splitLine2["Description"] = m_BOMData.Rows[index]["Description"];
+                splitLine2["FindNum"] = bomItem.SecondNewFNum;
+                splitLine2["Qty"] = bomItem.QtySplitTwo;
+                splitLine2["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
+                splitLine2["RefDes"] = bomItem.SecondSplitLine;
+                splitLine2["Notes"] = m_BOMData.Rows[index]["Notes"];
+                m_BOMData.Rows.InsertAt(splitLine2, index + 2);
+            }
+        }
+        private void UpdateOutputBOM(BOMItem bomItem)
+        {
+            string expression = "BEInum='" + bomItem.PartNumber + "'";
+            DataRow[] foundRows = m_OutputBOM.Select(expression);
+            foreach (DataRow row in foundRows)
+            {
+                int index = m_OutputBOM.Rows.IndexOf(row);
+
+                m_OutputBOM.Rows[index]["FindNum"] = bomItem.FirstNewFNum;
+                m_OutputBOM.Rows[index]["Qty"] = bomItem.QtySplitOne;
+                m_OutputBOM.Rows[index]["RefDes"] = bomItem.FirstSplitLine;
+
+                DataRow splitLine = m_OutputBOM.NewRow();
+                splitLine["Level"] = m_OutputBOM.Rows[index]["Level"];
+                splitLine["SubClass"] = m_OutputBOM.Rows[index]["SubClass"];
+                splitLine["BEInum"] = m_OutputBOM.Rows[index]["BEInum"];
+                splitLine["RevECO"] = m_OutputBOM.Rows[index]["RevECO"];
+                splitLine["Description"] = m_OutputBOM.Rows[index]["Description"];
+                splitLine["FindNum"] = bomItem.SecondNewFNum;
+                splitLine["Qty"] = bomItem.QtySplitTwo;
+                splitLine["UnitOfMeasure"] = m_OutputBOM.Rows[index]["UnitOfMeasure"];
+                splitLine["RefDes"] = bomItem.SecondSplitLine;
+                splitLine["Notes"] = m_OutputBOM.Rows[index]["Notes"];
+                m_OutputBOM.Rows.InsertAt(splitLine, index + 1);
+            }
+        }
     }
 }

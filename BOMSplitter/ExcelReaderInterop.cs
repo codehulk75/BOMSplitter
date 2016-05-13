@@ -17,9 +17,9 @@ namespace BOMSplitter
         private Workbook m_WorkBook;
         private object[,] m_ValueArray; //Original BOM Explosion data
 
-        public object[,] M_ValueArray
+        public object[,] ValueArray
         {
-            get { return this.m_ValueArray; }
+            get { return m_ValueArray; }
         }
         /// <summary>
         /// Initialize a new Excel reader. Must be integrated

@@ -51,10 +51,11 @@ namespace BOMSplitter
                         string rev = row[3].ToString();
                         string desc = row[4].ToString();
                         int fn = Convert.ToInt32(row[5].ToString());
-                        int qty = Convert.ToInt32(row[6].ToString());
+                        string qty = row[6].ToString();
+                        //int qty = Convert.ToInt32(row[6].ToString());
                         string unit = row[7].ToString();
                         string rd = row[8].ToString();
-                        string comments = row[9].ToString();
+                        string comments = row[9].ToString();                    
                         m_BOMParts.Add(new BOMItem(lvl, "Part", pn, rev, desc, qty, unit, fn, rd, comments));
                     }
                     catch(Exception ex)             

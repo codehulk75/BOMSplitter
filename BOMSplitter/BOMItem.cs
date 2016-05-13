@@ -17,13 +17,13 @@ namespace BOMSplitter
         private string m_UnitOfMeasure;
         private string m_Notes;
         private string m_OrigRefDes;
-        private int m_Qty;
+        private string m_Qty;
         private int m_OrigFindNum;
         private Dictionary<int, string> m_RefDes; // key = FindNum , value = refdes string
 
 
 
-        public BOMItem(string level, string subclass, string partno, string rev, string desc, int qty, string unit, int findnum, string refdes, string notes)
+        public BOMItem(string level, string subclass, string partno, string rev, string desc, string qty, string unit, int findnum, string refdes, string notes)
         {
             m_Level = level;
             m_SubClass = subclass;
@@ -85,7 +85,7 @@ namespace BOMSplitter
         {
             get { return m_PartNumber; }
         }
-        public int Qty
+        public string Qty
         {
             get { return m_Qty; }
             set { m_Qty = value; }

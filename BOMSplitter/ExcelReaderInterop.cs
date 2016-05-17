@@ -12,7 +12,6 @@ namespace BOMSplitter
 {
     class ExcelReaderInterop
     {
-        /// Store the Application object we can use in the member functions.
         private Application m_InputBOMExcelApp;
         private Workbook m_WorkBook;
         private object[,] m_ValueArray; //Original BOM Explosion data
@@ -65,7 +64,7 @@ namespace BOMSplitter
             Worksheet sheet = (Worksheet)m_WorkBook.Sheets[sheetNum];
 
             //
-            // Take the used range of the sheet. Finally, get an object array of all
+            // Take the used range of the sheet. Get an object array of all
             // of the cells in the sheet (their values). Store it in m_ValueArray.
             //
             Range excelRange = sheet.UsedRange;

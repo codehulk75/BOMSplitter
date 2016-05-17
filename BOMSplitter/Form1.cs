@@ -28,11 +28,25 @@ namespace BOMSplitter
         //m_Splits is read in from split file and holds all the Info needed to edit the orginal BOM
         private Dictionary<string, List<string>> m_Splits = new Dictionary<string, List<string>>(); //key = pn, value=2 strings containing top and bot ref des
         private List<BOMItem> m_BOMParts = new List<BOMItem>(); //just the lines in Parts category from the BOM, this will be edited with splits
-
-        //Export stuff
-        Microsoft.Office.Interop.Excel.Application m_ExportBOMExcelApp;
-        Workbook m_ExpBook;
-
+        private Workbook m_ExpBook;
+        private void ClearAllData()
+        {            
+            //Every time user choose a new BOM file, call this routine to reset all the data           
+            m_SplitFileName = null;
+            splitFileTextBox.Clear();
+            if(m_BOMData != null)
+                m_BOMData.Clear();
+            if(m_OutputBOM != null)
+                m_OutputBOM.Clear();
+            if (m_FoundPrevSplits.Count > 1)
+                m_FoundPrevSplits.Clear();
+            if(m_Splits.Count > 1)
+                m_Splits.Clear();
+            if(m_BOMParts.Count > 1)
+                m_BOMParts.Clear();
+            m_ExpBook = null;
+        }
+    
         private void GetBOMParts()
         {
             foreach (DataRow row in m_BOMData.Rows)
@@ -52,7 +66,6 @@ namespace BOMSplitter
                         string desc = row[4].ToString();
                         int fn = Convert.ToInt32(row[5].ToString());
                         string qty = row[6].ToString();
-                        //int qty = Convert.ToInt32(row[6].ToString());
                         string unit = row[7].ToString();
                         string rd = row[8].ToString();
                         string comments = row[9].ToString();                    
@@ -68,15 +81,14 @@ namespace BOMSplitter
         }
         private void openFileButton_Click(object sender, EventArgs e)
         {
-            //
-            //TO DO: Make sure Data is cleared out every time before adding a new BOM???
-            //
-
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Filter = "Excel Files (*.xlsx, *.xls)|*.xlsx;*.xls";
 
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
+                //Reset all variables every time user picks a new BOM file.
+                ClearAllData();
+
                 m_BOMExplosionFileName = openDialog.FileName;
                 bomFileTextBox.Text = m_BOMExplosionFileName;
                 ExcelReaderInterop rdr = new ExcelReaderInterop();
@@ -88,15 +100,42 @@ namespace BOMSplitter
                 //set output bom to same data as m_BOMData
                 m_OutputBOM = ArrayToDataTable(rdr.ValueArray);
                 m_OutputBOM.TableName = "BOM";
+                SplitAndRejoinBOMNotes(m_OutputBOM);
 
                 GetBOMParts(); //Populate list of BOMItems with only lines from BOM that are in the 'Part' category
             }
         }
 
+        private void SplitAndRejoinBOMNotes(System.Data.DataTable dt)
+        {
+            //
+            //There was an issue importing BOM Notes into Agile from the exported spreadsheet.
+            //It was due to formatting that is not visible in Excel but nevertheless was there in the Notes field where every space is between words.
+            //This split and rejoin routine fixes that issue.  Splits up BOM Notes on whitespace, and rejoins them with spaces (sans invisible formatting.)
+            //
+            int notesCol = dt.Columns.Count-1;
+            foreach( DataRow dr in dt.Rows)
+            {
+                try
+                {
+                    string notestr = dr[notesCol].ToString();
+                    if (notestr.Length > 1)
+                    {
+                        string[] temparr = notestr.Split();
+                        notestr = string.Join(" ", temparr);
+                        dr[notesCol] = notestr;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    continue;
+                }
+            }
+        }
+
         private System.Data.DataTable ArrayToDataTable(object[,] sheetdata)
         {
-            //this needs to work perfectly to return every single cell in the BOM in the used range, including blank,
-            //so the BOM can be restored to its original form, plus edits, in a reliable manner
             System.Data.DataTable dt = new System.Data.DataTable();
             dt.Columns.Add("Level");
             dt.Columns.Add("SubClass");
@@ -143,17 +182,17 @@ namespace BOMSplitter
         public void ExportSplits()
         {
             try
-            {              
-                m_ExportBOMExcelApp = new Microsoft.Office.Interop.Excel.Application();
-                m_ExpBook = m_ExportBOMExcelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            {
+                Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+                m_ExpBook = app.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
                 Worksheet exportSheet = m_ExpBook.Worksheets[1];
                 exportSheet.Cells.NumberFormat = "@";
-
+                
                 //copy to new Excel workbook and prompt user to save
                 object[,] arr = DataTableToArray(m_OutputBOM);
-                Microsoft.Office.Interop.Excel.Range firstcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[1,1];
-                Microsoft.Office.Interop.Excel.Range lastcell = (Microsoft.Office.Interop.Excel.Range)exportSheet.Cells[m_OutputBOM.Rows.Count, m_OutputBOM.Columns.Count];
-                Microsoft.Office.Interop.Excel.Range targetrange = (Microsoft.Office.Interop.Excel.Range)exportSheet.Range[firstcell, lastcell];
+                Range firstcell = exportSheet.Cells[1,1];
+                Range lastcell = exportSheet.Cells[m_OutputBOM.Rows.Count, m_OutputBOM.Columns.Count];
+                Range targetrange = exportSheet.Range[firstcell, lastcell];
                 targetrange.Value = arr;
 
                 // Clean up.

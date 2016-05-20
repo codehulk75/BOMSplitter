@@ -29,9 +29,11 @@ namespace BOMSplitter
         private Dictionary<string, List<string>> m_Splits = new Dictionary<string, List<string>>(); //key = pn, value=2 strings containing top and bot ref des
         private List<BOMItem> m_BOMParts = new List<BOMItem>(); //just the lines in Parts category from the BOM, this will be edited with splits
         private Workbook m_ExpBook;
+        private string m_AssemblyNumber = null;
         private void ClearAllData()
-        {            
-            //Every time user choose a new BOM file, call this routine to reset all the data           
+        {
+            //Every time user choose a new BOM file, call this routine to reset all the data  
+            m_AssemblyNumber = null;         
             m_SplitFileName = null;
             splitFileTextBox.Clear();
             if(m_BOMData != null)
@@ -101,7 +103,7 @@ namespace BOMSplitter
                 m_OutputBOM = ArrayToDataTable(rdr.ValueArray);
                 m_OutputBOM.TableName = "BOM";
                 SplitAndRejoinBOMNotes(m_OutputBOM);
-
+                m_AssemblyNumber = m_OutputBOM.Rows[1][1].ToString();
                 GetBOMParts(); //Populate list of BOMItems with only lines from BOM that are in the 'Part' category
             }
         }
@@ -162,15 +164,44 @@ namespace BOMSplitter
 
         private object[,] DataTableToArray(System.Data.DataTable dt)
         {
-            object[,] arr = new object[dt.Rows.Count, dt.Columns.Count];
-
-            for (int i = 0; i < dt.Rows.Count; i++)
+            int dataStart = 7;
+            int dataEnd = dt.Rows.Count - 5;
+            int headAndFoot = 12;
+            int importColCount = 7;
+            int rowDelta = 6;
+            object[,] arr = new object[dt.Rows.Count - headAndFoot, importColCount];
+            arr[0, 0] = "PARENT NO";
+            arr[0, 1] = "CHILD NO";
+            arr[0, 2] = "FIND NO";
+            arr[0, 3] = "QTY";
+            arr[0, 4] = "REF DES";
+            arr[0, 5] = "NOTES";
+            arr[0, 6] = "Description";
+            try
             {
-                DataRow dr = dt.Rows[i];          
-                for (int j = 0; j < dt.Columns.Count; j++)
+                for (int i = dataStart; i < dataEnd; i++)
                 {
-                    arr[i,j] = dr[j];
+                    DataRow dr = dt.Rows[i];
+                    string firstField = dt.Rows[i].ItemArray[0].ToString();
+                    if (firstField.Equals("0")) //if this line is the parent number line(Level == 0), skip it             
+                    {
+                        ++rowDelta;
+                        continue;
+                    }
+                    if (string.IsNullOrEmpty(firstField))
+                        break;
+                    arr[i - rowDelta, 0] = m_AssemblyNumber;
+                    arr[i - rowDelta, 1] = dr[2];
+                    arr[i - rowDelta, 2] = dr[5];
+                    arr[i - rowDelta, 3] = dr[6];
+                    arr[i - rowDelta, 4] = dr[8];
+                    arr[i - rowDelta, 5] = dr[9];
+                    arr[i - rowDelta, 6] = dr[4];
                 }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\nDataTableToArray()");
             }
             return arr;
         }
@@ -191,7 +222,7 @@ namespace BOMSplitter
                 //copy to new Excel workbook and prompt user to save
                 object[,] arr = DataTableToArray(m_OutputBOM);
                 Range firstcell = exportSheet.Cells[1,1];
-                Range lastcell = exportSheet.Cells[m_OutputBOM.Rows.Count, m_OutputBOM.Columns.Count];
+                Range lastcell = exportSheet.Cells[arr.GetLength(0), arr.GetLength(1)];
                 Range targetrange = exportSheet.Range[firstcell, lastcell];
                 targetrange.Value = arr;
 

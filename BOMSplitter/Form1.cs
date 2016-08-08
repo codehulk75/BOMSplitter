@@ -310,6 +310,7 @@ namespace BOMSplitter
    
         private void SplitBOM()
         {
+            List<BOMItem> mergedParts = new List<BOMItem>();
             foreach (var splitPNData in m_Splits)
             {               
                 List<BOMItem> foundParts = m_BOMParts.FindAll(x => x.PartNumber == splitPNData.Key);
@@ -317,10 +318,19 @@ namespace BOMSplitter
                 {
                     //if previous split is found, add it to a list for notification later, and do not process new split
                     m_FoundPrevSplits.Add(foundParts[0].PartNumber);
+                    string pts = string.Join("\n", foundParts);
+                    mergedParts.AddRange(foundParts);
+                    BOMItem mergedItem = MergeItems(foundParts);
+                    if (mergedItem.SplitPart(splitPNData.Key, splitPNData.Value) == true)
+                    {
+                        UpdateGUIBOM(mergedItem);
+                        UpdateOutputBOM(mergedItem);
+                    }           
                     continue;
                 }
                 else if (foundParts.Count < 1)
                 {
+                    MessageBox.Show("Split Part #" + splitPNData.Key + " not found in the BOM Explosion Report!!", "Something Isn't Right?!",MessageBoxButtons.OK, MessageBoxIcon.Warning);             
                     continue;
                 }
                 if (foundParts[0].SplitPart(splitPNData.Key, splitPNData.Value) == true)
@@ -329,6 +339,62 @@ namespace BOMSplitter
                     UpdateOutputBOM(foundParts[0]);                                
                 }
             }
+            if(mergedParts.Count == 0)
+                return;
+            MergedItemsMB mergeMessage = new MergedItemsMB(mergedParts);
+            mergeMessage.ShowDialog();
+        }
+
+        private BOMItem MergeItems(List<BOMItem> dupItems)
+        {
+
+            try
+            {
+                dupItems.Sort(delegate (BOMItem x, BOMItem y)
+                {
+                    if (x.OldFindNum < y.OldFindNum) return -1;
+                    else return 1;
+                });
+                BOMItem firstBOMItem = PopAt(dupItems, 0);
+                m_BOMParts.RemoveAll(x => x.OldFindNum.Equals(firstBOMItem.OldFindNum));
+                foreach (BOMItem item in dupItems)
+                {
+                    firstBOMItem.AddRefDes(item.RefDes[item.OldFindNum], item.Qty);
+                    m_BOMParts.RemoveAll(x => x.OldFindNum.Equals(item.OldFindNum));
+
+                    string expression = "FindNum='" + item.OldFindNum + "'";
+                    DataRow[] foundRowsGUI = m_BOMData.Select(expression);
+                    foreach (DataRow row in foundRowsGUI)
+                    {
+                        m_BOMData.Rows.Remove(row);
+                    }
+                    DataRow[] foundRowsData = m_OutputBOM.Select(expression);
+                    foreach (DataRow row in foundRowsData)
+                    {
+                        m_OutputBOM.Rows.Remove(row);
+
+                    }
+                }
+                DataRow[] originalRow = m_BOMData.Select("FindNum='" + firstBOMItem.OldFindNum + "'");
+                originalRow[0]["Qty"] = firstBOMItem.Qty;
+                originalRow[0]["RefDes"] = firstBOMItem.RefDes[firstBOMItem.OldFindNum];
+                m_BOMParts.Add(firstBOMItem);
+                return firstBOMItem;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Something went wrong when trying to merge the BOM :(\n"+ex.Message);
+                return dupItems[0];
+            }                     
+        }
+
+        public static T PopAt<T>(List<T> list, int index)
+        {
+            //helper method to remove and return an element froma list
+            //I'm using it here to have like a 'Pop()' but from the beginning of the list (my obj = PopAt(myList, 0))
+            T r = list[index];
+            list.RemoveAt(index);
+            return r;
         }
 
         private void UpdateGUIBOM(BOMItem bomItem)
@@ -349,7 +415,7 @@ namespace BOMSplitter
                 splitLine1["FindNum"] = bomItem.FirstNewFNum;
                 splitLine1["Qty"] = bomItem.QtySplitOne;
                 splitLine1["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
-                splitLine1["RefDes"] = bomItem.FirstSplitLine;
+                splitLine1["RefDes"] = bomItem.GetSplitLine(1);
                 splitLine1["Notes"] = m_BOMData.Rows[index]["Notes"];
                 m_BOMData.Rows.InsertAt(splitLine1, index + 1);
 
@@ -362,7 +428,7 @@ namespace BOMSplitter
                 splitLine2["FindNum"] = bomItem.SecondNewFNum;
                 splitLine2["Qty"] = bomItem.QtySplitTwo;
                 splitLine2["UnitOfMeasure"] = m_BOMData.Rows[index]["UnitOfMeasure"];
-                splitLine2["RefDes"] = bomItem.SecondSplitLine;
+                splitLine2["RefDes"] = bomItem.GetSplitLine(2);
                 splitLine2["Notes"] = m_BOMData.Rows[index]["Notes"];
                 m_BOMData.Rows.InsertAt(splitLine2, index + 2);
             }
@@ -377,7 +443,7 @@ namespace BOMSplitter
 
                 m_OutputBOM.Rows[index]["FindNum"] = bomItem.FirstNewFNum;
                 m_OutputBOM.Rows[index]["Qty"] = bomItem.QtySplitOne;
-                m_OutputBOM.Rows[index]["RefDes"] = bomItem.FirstSplitLine;
+                m_OutputBOM.Rows[index]["RefDes"] = bomItem.GetSplitLine(1);
 
                 DataRow splitLine = m_OutputBOM.NewRow();
                 splitLine["Level"] = m_OutputBOM.Rows[index]["Level"];
@@ -388,7 +454,7 @@ namespace BOMSplitter
                 splitLine["FindNum"] = bomItem.SecondNewFNum;
                 splitLine["Qty"] = bomItem.QtySplitTwo;
                 splitLine["UnitOfMeasure"] = m_OutputBOM.Rows[index]["UnitOfMeasure"];
-                splitLine["RefDes"] = bomItem.SecondSplitLine;
+                splitLine["RefDes"] = bomItem.GetSplitLine(2);
                 splitLine["Notes"] = m_OutputBOM.Rows[index]["Notes"];
                 m_OutputBOM.Rows.InsertAt(splitLine, index + 1);
             }

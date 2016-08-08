@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace BOMSplitter
 {
-    class BOMItem
+    public class BOMItem
     {
         private string m_Level;
         private string m_SubClass;
@@ -17,6 +17,7 @@ namespace BOMSplitter
         private string m_UnitOfMeasure;
         private string m_Notes;
         private string m_OrigRefDes;
+        private string m_PreMergeOriginalRefDes;
         private string m_Qty;
         private int m_OrigFindNum;
         private Dictionary<int, string> m_RefDes; // key = FindNum , value = refdes string
@@ -34,6 +35,7 @@ namespace BOMSplitter
             m_UnitOfMeasure = unit;
             m_OrigFindNum = findnum;
             m_OrigRefDes = refdes;
+            m_PreMergeOriginalRefDes = refdes;
             m_RefDes = new Dictionary<int, string>();
             m_RefDes.Add(m_OrigFindNum, m_OrigRefDes);
             m_Notes = notes;
@@ -69,21 +71,28 @@ namespace BOMSplitter
         {
             get { return m_OrigFindNum + 2; }
         }
-        public string FirstSplitLine
+        public string GetSplitLine(int lineNum)
         {
-            get { return m_RefDes[m_OrigFindNum + 1]; }
-        }
-        public string SecondSplitLine
-        {
-            get { return m_RefDes[m_OrigFindNum + 2]; }
+            return m_RefDes[m_OrigFindNum + lineNum];
         }
         public Dictionary<int, string> RefDes
         {
             get { return m_RefDes; }
         }
+        public void AddRefDes(string newRefDeses, string newQty)
+        {
+            int qty = Convert.ToInt32(m_Qty) + Convert.ToInt32(newQty);
+            m_Qty = qty.ToString();
+            m_OrigRefDes += "," + newRefDeses;
+            m_RefDes[m_OrigFindNum] = m_OrigRefDes;
+        }
         public string PartNumber
         {
             get { return m_PartNumber; }
+        }
+        public string OriginalRefs
+        {
+            get { return m_PreMergeOriginalRefDes; }
         }
         public string Qty
         {

@@ -112,24 +112,26 @@ namespace BOMSplitter
 
         public bool SplitPart(string partnum, List<string> splits)
         {
-            try
+            if (partnum == m_PartNumber)
             {
-                if (partnum == m_PartNumber)
-                {                   
-                    m_RefDes.Add(m_OrigFindNum + 1, splits[0]);
-                    m_RefDes.Add(m_OrigFindNum  + 2, splits[1]);
+                try
+                {
+                    int index = 1;
+                    foreach(string split in splits)
+                    {
+                        m_RefDes.Add(m_OrigFindNum + index, splits[index-1]);
+                        ++index;                                                                  
+                    }
                     m_RefDes.Remove(m_OrigFindNum);
                 }
-                else
+                catch(Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                     return false;
                 }
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+            else
                 return false;
-            }
             return true;
         }
 

@@ -30,6 +30,7 @@ namespace BOMSplitter
         private List<BOMItem> m_BOMParts = new List<BOMItem>(); //just the lines in Parts category from the BOM, this will be edited with splits
         private Workbook m_ExpBook;
         private string m_AssemblyNumber = null;
+        private int mergeFlag = -1;
         private void ClearAllData()
         {
             //Every time user choose a new BOM file, call this routine to reset all the data  
@@ -316,16 +317,18 @@ namespace BOMSplitter
                 List<BOMItem> foundParts = m_BOMParts.FindAll(x => x.PartNumber == splitPNData.Key);
                 if(foundParts.Count > 1)
                 {
-                    //if previous split is found, add it to a list for notification later, and do not process new split
-                    m_FoundPrevSplits.Add(foundParts[0].PartNumber);
-                    string pts = string.Join("\n", foundParts);
-                    mergedParts.AddRange(foundParts);
-                    BOMItem mergedItem = MergeItems(foundParts);
-                    if (mergedItem.SplitPart(splitPNData.Key, splitPNData.Value) == true)
+                    if(MergeFlag() == true)
                     {
-                        UpdateGUIBOM(mergedItem);
-                        UpdateOutputBOM(mergedItem);
-                    }           
+                        m_FoundPrevSplits.Add(foundParts[0].PartNumber);
+                        string pts = string.Join("\n", foundParts);
+                        mergedParts.AddRange(foundParts);
+                        BOMItem mergedItem = MergeItems(foundParts);
+                        if (mergedItem.SplitPart(splitPNData.Key, splitPNData.Value) == true)
+                        {
+                            UpdateGUIBOM(mergedItem);
+                            UpdateOutputBOM(mergedItem);
+                        }                      
+                    }
                     continue;
                 }
                 else if (foundParts.Count < 1)
@@ -343,6 +346,39 @@ namespace BOMSplitter
                 return;
             MergedItemsMB mergeMessage = new MergedItemsMB(mergedParts);
             mergeMessage.ShowDialog();
+        }
+
+        private bool MergeFlag()
+        {
+            bool bmerge = true;
+            switch(mergeFlag)
+            {
+                case -1:                    
+                    var result = MessageBox.Show("This split file list parts that are already split.\n"
+                        + "Click 'Yes' to merge the split and re-split with file data.\n"
+                        + "Click 'No' to leave parts as is and ignore the new ones in the split file.", "Merge BOM?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        mergeFlag = 1;
+                        bmerge = true;
+                    }                         
+                    else if (result == DialogResult.No)
+                    {
+                        mergeFlag = 0;
+                        bmerge = false;
+                    }                          
+                    break;
+                case 1:
+                    bmerge =  true;
+                    break;
+                case 0:
+                    bmerge = false;
+                    break;
+                default:
+                    bmerge = true;
+                    break;                 
+            }
+            return bmerge;
         }
 
         private BOMItem MergeItems(List<BOMItem> dupItems)

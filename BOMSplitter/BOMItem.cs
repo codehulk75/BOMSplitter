@@ -115,9 +115,9 @@ namespace BOMSplitter
             try
             {
                 if (partnum == m_PartNumber)
-                {
+                {                   
                     m_RefDes.Add(m_OrigFindNum + 1, splits[0]);
-                    m_RefDes.Add(m_OrigFindNum + 2, splits[1]);
+                    m_RefDes.Add(m_OrigFindNum  + 2, splits[1]);
                     m_RefDes.Remove(m_OrigFindNum);
                 }
                 else

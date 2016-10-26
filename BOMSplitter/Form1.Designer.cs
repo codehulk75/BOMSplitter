@@ -55,18 +55,19 @@
             // 
             this.bomFileTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.bomFileTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bomFileTextBox.Location = new System.Drawing.Point(114, 9);
             this.bomFileTextBox.Name = "bomFileTextBox";
-            this.bomFileTextBox.Size = new System.Drawing.Size(606, 20);
+            this.bomFileTextBox.Size = new System.Drawing.Size(616, 20);
             this.bomFileTextBox.TabIndex = 1;
             // 
             // openFileButton
             // 
             this.openFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.openFileButton.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openFileButton.Location = new System.Drawing.Point(726, 9);
+            this.openFileButton.Location = new System.Drawing.Point(736, 9);
             this.openFileButton.Name = "openFileButton";
-            this.openFileButton.Size = new System.Drawing.Size(53, 20);
+            this.openFileButton.Size = new System.Drawing.Size(43, 20);
             this.openFileButton.TabIndex = 2;
             this.openFileButton.Text = "...";
             this.openFileButton.UseVisualStyleBackColor = true;
@@ -80,7 +81,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bomGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.bomGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.bomGridView.BackgroundColor = System.Drawing.SystemColors.GrayText;
             this.bomGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.bomGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.bomGridView.Location = new System.Drawing.Point(15, 83);
@@ -114,18 +115,20 @@
             // 
             this.splitFileTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitFileTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitFileTextBox.Location = new System.Drawing.Point(114, 33);
             this.splitFileTextBox.Name = "splitFileTextBox";
-            this.splitFileTextBox.Size = new System.Drawing.Size(606, 20);
+            this.splitFileTextBox.Size = new System.Drawing.Size(616, 20);
             this.splitFileTextBox.TabIndex = 7;
             // 
             // splitFileButton
             // 
             this.splitFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.splitFileButton.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.splitFileButton.Location = new System.Drawing.Point(726, 33);
+            this.splitFileButton.Location = new System.Drawing.Point(736, 33);
             this.splitFileButton.Name = "splitFileButton";
-            this.splitFileButton.Size = new System.Drawing.Size(53, 20);
+            this.splitFileButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.splitFileButton.Size = new System.Drawing.Size(43, 20);
             this.splitFileButton.TabIndex = 8;
             this.splitFileButton.Text = "...";
             this.splitFileButton.UseVisualStyleBackColor = true;
@@ -134,12 +137,12 @@
             // doSplitsButton
             // 
             this.doSplitsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.doSplitsButton.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.doSplitsButton.Location = new System.Drawing.Point(692, 54);
+            this.doSplitsButton.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.doSplitsButton.Location = new System.Drawing.Point(704, 56);
             this.doSplitsButton.Name = "doSplitsButton";
-            this.doSplitsButton.Size = new System.Drawing.Size(87, 23);
+            this.doSplitsButton.Size = new System.Drawing.Size(75, 23);
             this.doSplitsButton.TabIndex = 9;
-            this.doSplitsButton.Text = "Split BOM";
+            this.doSplitsButton.Text = "Split";
             this.doSplitsButton.UseVisualStyleBackColor = true;
             this.doSplitsButton.Click += new System.EventHandler(this.doSplitsButton_Click);
             // 
@@ -160,7 +163,7 @@
             this.Controls.Add(this.bomFileLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "BOM Splitter";
+            this.Text = "Splits";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.bomGridView)).EndInit();
             this.ResumeLayout(false);

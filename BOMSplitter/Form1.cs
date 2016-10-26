@@ -30,10 +30,17 @@ namespace BOMSplitter
         private List<BOMItem> m_BOMParts = new List<BOMItem>(); //just the lines in Parts category from the BOM, this will be edited with splits
         private Workbook m_ExpBook;
         private string m_AssemblyNumber = null;
+        private List<int> m_FindNumList = new List<int>();
         private int mergeFlag = -1;
+
+        public List<int> FNList
+        {
+            get { return m_FindNumList; }
+        }
         private void ClearAllData()
         {
             //Every time user choose a new BOM file, call this routine to reset all the data  
+            m_FindNumList.Clear();
             m_AssemblyNumber = null;         
             m_SplitFileName = null;
             splitFileTextBox.Clear();
@@ -55,6 +62,7 @@ namespace BOMSplitter
         {
             foreach (DataRow row in m_BOMData.Rows)
             {
+                CollectFindNum(row);  //Keep a list of all original FindNums to guard against dups or overwriting
                 if (string.IsNullOrEmpty(row[8].ToString()))
                 {
                     //No ref des's??  Don't bother...
@@ -82,6 +90,20 @@ namespace BOMSplitter
                     }
                 }
             }
+        }
+
+        private void CollectFindNum(DataRow row)
+        {
+            if (string.IsNullOrEmpty(row[0].ToString()) == false 
+                && row[0].ToString().Equals(". 1") 
+                && string.IsNullOrEmpty(row[5].ToString()) == false
+                && !row[4].ToString().Contains("LABEL")) //don't add label FindNums
+            {
+                int fn = Convert.ToInt32(row[5].ToString());
+                if(fn > 0 && fn < 9000) //don't add fn's of the docs at the end of BOMS
+                    m_FindNumList.Add(fn); 
+            }
+
         }
         private void openFileButton_Click(object sender, EventArgs e)
         {
@@ -220,7 +242,7 @@ namespace BOMSplitter
                 m_ExpBook = app.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
                 Worksheet exportSheet = m_ExpBook.Worksheets[1];
                 exportSheet.Cells.NumberFormat = "@";
-                
+
                 //copy to new Excel workbook and prompt user to save
                 object[,] arr = DataTableToArray(m_OutputBOM);
                 Range firstcell = exportSheet.Cells[1,1];
@@ -304,7 +326,7 @@ namespace BOMSplitter
                                         string[] postattempt = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
                                         if (postattempt.Length > 0)
                                         {
-                                            Match postmatch = postreg.Match(postattempt[0]);
+                                            Match postmatch = postreg.Match(postattempt[0]); //Check for post parts added to split. must have 'POST' as first non-whitespace word then post ref des's on line below
                                             if (postattempt.Length == 3 && postmatch.Success)
                                             {
                                                 line = splitreader.ReadLine();
@@ -334,18 +356,23 @@ namespace BOMSplitter
         {
             List<BOMItem> mergedParts = new List<BOMItem>();
             foreach (var splitPNData in m_Splits)
-            {               
+            {
+                int nRetSplit = -1;
                 List<BOMItem> foundParts = m_BOMParts.FindAll(x => x.PartNumber == splitPNData.Key);
                 if(foundParts.Count > 1)
                 {
                     if(MergeFlag() == true)
                     {
                         m_FoundPrevSplits.Add(foundParts[0].PartNumber);
-                        string pts = string.Join("\n", foundParts);
                         mergedParts.AddRange(foundParts);
                         BOMItem mergedItem = MergeItems(foundParts);
-                        if (mergedItem.SplitPart(splitPNData.Key, splitPNData.Value) == true)
+                        nRetSplit = mergedItem.SplitPart(splitPNData.Key, splitPNData.Value, FNList);
+                        if (nRetSplit > 1)
                         {
+                            if (!m_FindNumList.Contains(nRetSplit))
+                            {
+                                m_FindNumList.Add(nRetSplit);
+                            }
                             UpdateGUIBOM(mergedItem);
                             UpdateOutputBOM(mergedItem);
                         }                      
@@ -357,8 +384,13 @@ namespace BOMSplitter
                     MessageBox.Show("Split Part #" + splitPNData.Key + " not found in the BOM Explosion Report!!", "Something Isn't Right?!",MessageBoxButtons.OK, MessageBoxIcon.Warning);             
                     continue;
                 }
-                if (foundParts[0].SplitPart(splitPNData.Key, splitPNData.Value) == true)
+                nRetSplit = foundParts[0].SplitPart(splitPNData.Key, splitPNData.Value, FNList);
+                if (nRetSplit > 1)
                 {
+                    if (!m_FindNumList.Contains(nRetSplit))
+                    {
+                        m_FindNumList.Add(nRetSplit);
+                    }
                     UpdateGUIBOM(foundParts[0]);
                     UpdateOutputBOM(foundParts[0]);                                
                 }
@@ -407,12 +439,8 @@ namespace BOMSplitter
 
             try
             {
-                dupItems.Sort(delegate (BOMItem x, BOMItem y)
-                {
-                    if (x.OldFindNum < y.OldFindNum) return -1;
-                    else return 1;
-                });
-                BOMItem firstBOMItem = PopAt(dupItems, 0);
+                dupItems.Sort((x, y) => x.OldFindNum.CompareTo(y.OldFindNum)); // FindNum should already be in order, but sort just in case
+                BOMItem firstBOMItem = PopAt(dupItems, 0); //Keep the lowest findnum, and merge the others to that one
                 m_BOMParts.RemoveAll(x => x.OldFindNum.Equals(firstBOMItem.OldFindNum));
                 foreach (BOMItem item in dupItems)
                 {
@@ -429,7 +457,6 @@ namespace BOMSplitter
                     foreach (DataRow row in foundRowsData)
                     {
                         m_OutputBOM.Rows.Remove(row);
-
                     }
                 }
                 DataRow[] originalRow = m_BOMData.Select("FindNum='" + firstBOMItem.OldFindNum + "'");
@@ -492,8 +519,8 @@ namespace BOMSplitter
                 string subclass = m_OutputBOM.Rows[index]["SubClass"].ToString();
                 string beinum = m_OutputBOM.Rows[index]["BEInum"].ToString();
                 string reveco = m_OutputBOM.Rows[index]["RevECO"].ToString();
-                string desc = m_OutputBOM.Rows[index]["RevECO"].ToString();
-                string unit = m_OutputBOM.Rows[index]["RevECO"].ToString();
+                string desc = m_OutputBOM.Rows[index]["Description"].ToString();
+                string unit = m_OutputBOM.Rows[index]["UnitOfMeasure"].ToString();
                 string notes = m_OutputBOM.Rows[index]["Notes"].ToString();
                 m_OutputBOM.Rows.RemoveAt(index);
                 foreach (KeyValuePair<int, string> entry in bomItem.RefDes)

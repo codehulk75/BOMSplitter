@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BOMSplitter")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Splits")]
+[assembly: AssemblyDescription("A utility for BOM-splitting. For use by BEI Configuration personnel.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("BOMSplitter")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
+[assembly: AssemblyCompany("Benchmark Electronics, Inc")]
+[assembly: AssemblyProduct("Splits")]
+[assembly: AssemblyCopyright("Copyright ©  2016 - Craig Thomson for Benchmark Electronics, Inc")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

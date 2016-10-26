@@ -16,7 +16,7 @@ namespace BOMSplitter
         private string m_Description;
         private string m_UnitOfMeasure;
         private string m_Notes;
-        private string m_OrigRefDes;
+        private string m_OrigRefDes; //may get merged if it's found to be pre-split already, for untouched original use 'PreMergeOriginalRefDes'
         private string m_PreMergeOriginalRefDes;
         private string m_Qty;
         private int m_OrigFindNum;
@@ -40,40 +40,10 @@ namespace BOMSplitter
             m_RefDes.Add(m_OrigFindNum, m_OrigRefDes);
             m_Notes = notes;
         }
-
-        public int QtySplitOne
-        {
-            get
-            {
-                string str = m_RefDes[m_OrigFindNum + 1];
-                string[] rds = str.Split(new char[] { ',' });
-                return rds.Length;
-            }
-        }
-        public int QtySplitTwo
-        {
-            get
-            {
-                string str = m_RefDes[m_OrigFindNum + 2];
-                string[] rds = str.Split(new char[] { ',' });
-                return rds.Length;
-            }
-        }
         public int OldFindNum
         {
             get { return m_OrigFindNum; }
-        }
-        public int FirstNewFNum
-        {
-            get { return m_OrigFindNum + 1; }
-        }
-        public int SecondNewFNum
-        {
-            get { return m_OrigFindNum + 2; }
-        }
-        public string GetSplitLine(int lineNum)
-        {
-            return m_RefDes[m_OrigFindNum + lineNum];
+            set { m_OrigFindNum = value; }
         }
         public Dictionary<int, string> RefDes
         {
@@ -109,30 +79,77 @@ namespace BOMSplitter
             }
             return result;
         }
-
-        public bool SplitPart(string partnum, List<string> splits)
+        
+        private int ReGenFindNums(List<int> fNums)
         {
+            fNums.Sort();
+            int highest = fNums.Last();
+            int nParentFN = m_OrigFindNum - m_OrigFindNum % 10;
+            int newFNstart = 0;
+            if (!fNums.Contains(nParentFN))
+            {
+                newFNstart = nParentFN + 1;
+            }
+            else
+            {
+                newFNstart = highest - highest % 10 + 11;
+            }           
+            List<int> oldkeys = new List<int>(RefDes.Keys);
+            foreach(int key in oldkeys)
+            {
+                string tempRDs = RefDes[key];
+                RefDes.Remove(key);
+                RefDes.Add(newFNstart, tempRDs);
+                ++newFNstart;
+                ++highest;
+            }
+            return highest > newFNstart ? highest:newFNstart;
+        }
+        public int SplitPart(string partnum, List<string> splits, List<int> fNums)
+        {
+            int NewHighFindNum = -1;
             if (partnum == m_PartNumber)
             {
                 try
                 {
-                    int index = 1;
-                    foreach(string split in splits)
-                    {
-                        m_RefDes.Add(m_OrigFindNum + index, splits[index-1]);
-                        ++index;                                                                  
+                    int index = 0;
+                    int offset = 1;                 
+                    foreach (string split in splits)
+                    {                       
+                        int newFindNum = m_OrigFindNum + offset;
+                        if (newFindNum % 10 == 5)
+                        {
+                            //FindNums ending in 5 are reserved for Alt. PN's
+                            ++newFindNum;
+                            ++offset;
+                        }
+                        if (fNums.Contains(newFindNum))
+                        {
+                            NewHighFindNum = 0;
+                        }
+                        if(NewHighFindNum != 0)
+                        {
+                            NewHighFindNum = newFindNum;
+                        }
+                        m_RefDes.Add(newFindNum, splits[index]);
+                        ++index;
+                        ++offset;                                                             
                     }
                     m_RefDes.Remove(m_OrigFindNum);
+                    if (NewHighFindNum == 0)
+                    {
+                        NewHighFindNum = ReGenFindNums(fNums);       
+                    }                   
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
-                    return false;
+                    MessageBox.Show("Error in BOMItem->SplitPart(). PartNum = " + partnum + "\nError = " + ex.Message);
+                    return 0;
                 }
             }
             else
-                return false;
-            return true;
+                return 0;
+            return NewHighFindNum;
         }
 
     }

@@ -1164,7 +1164,6 @@
 		<row><td>ProgramMenuFolder</td><td>TARGETDIR</td><td>.:Programs</td><td/><td>3</td><td/></row>
 		<row><td>RecentFolder</td><td>TARGETDIR</td><td>.:Recent</td><td/><td>0</td><td/></row>
 		<row><td>SPLITS</td><td>E</td><td>Splits</td><td/><td>0</td><td/></row>
-		<row><td>SPLITS1</td><td>SPLITS2</td><td>Splits</td><td/><td>0</td><td/></row>
 		<row><td>SPLITS2</td><td>ProgramFilesFolder</td><td>Splits</td><td/><td>0</td><td/></row>
 		<row><td>SendToFolder</td><td>TARGETDIR</td><td>.:SendTo</td><td/><td>3</td><td/></row>
 		<row><td>StartMenuFolder</td><td>TARGETDIR</td><td>.:STARTM~1|Start Menu</td><td/><td>3</td><td/></row>
@@ -1178,8 +1177,7 @@
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
-		<row><td>benchm_1_benchmark_electronics__inc</td><td>ProgramMenuFolder</td><td>BENCHM~1|Benchmark Electronics, Inc</td><td/><td>1</td><td/></row>
-		<row><td>splits</td><td>benchm_1_benchmark_electronics__inc</td><td>Splits</td><td/><td>1</td><td/></row>
+		<row><td>newfolder1</td><td>StartupFolder</td><td>##ID_STRING12##</td><td/><td>1</td><td/></row>
 	</table>
 
 	<table name="DrLocator">
@@ -1889,7 +1887,8 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
 		<row><td>bomsplitter.primary_output</td><td>BOMSplitter.Primary_output</td><td>BOMSplitter.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;BOMSplitter&gt;|Built</td><td>3</td><td/></row>
-		<row><td>splits.ico</td><td>ISX_DEFAULTCOMPONENT1</td><td>Splits.ico</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\thomsc\Documents\Visual Studio 2015\Projects\BOMSplitter\BOMSplitter\bin\Release\Splits.ico</td><td>1</td><td/></row>
+		<row><td>splits.ico</td><td>ISX_DEFAULTCOMPONENT</td><td>Splits.ico</td><td>0</td><td/><td/><td/><td>1</td><td>D:\coding\icons\Splits.ico</td><td>1</td><td/></row>
+		<row><td>splits_program_user_guide.do</td><td>ISX_DEFAULTCOMPONENT</td><td>SPLITS~1.DOC|Splits Program User Guide.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\thomsc\Documents\Visual Studio 2015\Projects\BOMSplitter\BOMSplitter\bin\Release\Splits Program User Guide.docx</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2379,7 +2378,7 @@
 		<row><td>DVD-18</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>15.83</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-5</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>4.38</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-9</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>7.95</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
-		<row><td>SingleImage</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>108573</td><td/><td/><td/><td>3</td></row>
+		<row><td>SingleImage</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>108572</td><td/><td/><td/><td>3</td></row>
 		<row><td>WebDeployment</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>4</td><td>1033</td><td>2</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>124941</td><td/><td/><td/><td>3</td></row>
 	</table>
 
@@ -2622,7 +2621,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>-719055125</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>-1910236020</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-719008533</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-719008533</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>-719008533</td></row>
@@ -3726,11 +3725,14 @@
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-719008533</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-719006485</td></row>
 		<row><td>ID_STRING10</td><td>1033</td><td>Craig Thomson</td><td>0</td><td/><td>-719051412</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.bench.com</td><td>0</td><td/><td>-719002357</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>Craig Thomson</td><td>0</td><td/><td>-719036821</td></row>
+		<row><td>ID_STRING11</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-1197093877</td></row>
+		<row><td>ID_STRING12</td><td>1033</td><td>BENCHM~2|Benchmark Electronics-CT Software</td><td>0</td><td/><td>153439304</td></row>
+		<row><td>ID_STRING13</td><td>1033</td><td>Splits</td><td>0</td><td/><td>153463880</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.BenchmarkElectronics,Inc-CraigThomson.com</td><td>0</td><td/><td>-1910236020</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>-1910236020</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>LAUNCH~1.EXE|Launch BOMSplitter.exe</td><td>0</td><td/><td>-719022581</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>Split Utility for BEI Configuration Dept. - written by Craig Thomson - 2016</td><td>0</td><td/><td>-719036404</td></row>
-		<row><td>ID_STRING6</td><td>1033</td><td>craig.thomson@bench.com</td><td>0</td><td/><td>-719002292</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>craig.thomson@bench.com</td><td>0</td><td/><td>-1910236020</td></row>
 		<row><td>ID_STRING7</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-719004980</td></row>
 		<row><td>ID_STRING8</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-719035668</td></row>
 		<row><td>ID_STRING9</td><td>1033</td><td>x7147</td><td>0</td><td/><td>-719057556</td></row>
@@ -3847,13 +3849,14 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>[INSTALLDIR]Splits.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
 		<row><td>BOMSplitter.exe1_59389125EAB64BF5869187CEA76F3D8F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>BOMSplitter.exe1_E2EDCEC063D14E6D8377F7569DEB54FD.exe</td><td/><td>[INSTALLDIR]Splits.ico</td><td>0</td></row>
 		<row><td>BOMSplitter.exe_5481AF30A11B4C018CD4272AF3FC3E07.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>BOMSplitter.exe_69B78D432FF74285945646EEB4D75767.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>NewShortcut11_D1991C10B1D1426C91F17E75646A812D.exe</td><td/><td>[INSTALLDIR]Splits.ico</td><td>0</td></row>
-		<row><td>NewShortcut1_823A065589ED40BD908A336F941A3D60.exe</td><td/><td>[INSTALLDIR]Splits.ico</td><td>0</td></row>
+		<row><td>NewShortcut111_620716A32F6F47839A394045D9B7E3C8.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
+		<row><td>NewShortcut11_3E4F0A5276CF49EC84F0475B3FDADE34.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
+		<row><td>NewShortcut3_C4CF423A55AE4D4DB626D7ED9CDC2136.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -3986,7 +3989,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{6E054E3B-CE10-4CA7-BD3D-352CC783ACC8}</td></row>
 		<row><td>ISUSSignature</td><td>{213F600C-B1C9-4B32-97B6-160474FA7599}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewShortcuts,viewFileExtensions,viewServices,viewUI,viewTextMessages,viewSystemSearch,viewCustomActions,viewRelease</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewUpgradePaths,viewUpdateService,viewAppFiles,viewObjects,viewShortcuts,viewFileExtensions,viewServices,viewUI,viewTextMessages,viewSystemSearch,viewCustomActions,viewRelease,viewRegistry,viewIniFiles,viewEnvironmentVariables,viewVRoots,viewISToday,viewLearnMore</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4443,7 +4446,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>NewShortcut1</td><td>BOMSplitter.Primary_output</td><td/><td>splits</td><td>2</td></row>
+		<row><td>NewShortcut3</td><td>BOMSplitter.Primary_output</td><td/><td>newfolder1</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4529,8 +4532,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>NewShortcut1</td><td>splits</td><td>##ID_STRING7##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut1_823A065589ED40BD908A336F941A3D60.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>NewShortcut11</td><td>DesktopFolder</td><td>##ID_STRING8##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut11_D1991C10B1D1426C91F17E75646A812D.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut11</td><td>DesktopFolder</td><td>##ID_STRING8##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut11_3E4F0A5276CF49EC84F0475B3FDADE34.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut111</td><td>StartupFolder</td><td>##ID_STRING11##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut111_620716A32F6F47839A394045D9B7E3C8.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>NewShortcut3</td><td>newfolder1</td><td>##ID_STRING13##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut3_C4CF423A55AE4D4DB626D7ED9CDC2136.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

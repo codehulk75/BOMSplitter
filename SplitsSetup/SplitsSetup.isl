@@ -1065,12 +1065,13 @@
 		<col def="S0">Target</col>
 		<col def="I4">ExtendedType</col>
 		<col def="S255">ISComments</col>
-		<row><td>ISPreventDowngrade</td><td>19</td><td/><td>[IS_PREVENT_DOWNGRADE_EXIT]</td><td/><td>Exits install when a newer version of this product is found</td></row>
+		<row><td>ISPreventDowngrade</td><td>19</td><td/><td>[IS_PREVENT_DOWNGRADE_EXIT]</td><td/><td/></row>
 		<row><td>ISPrint</td><td>1</td><td>SetAllUsers.dll</td><td>PrintScrollableText</td><td/><td>Prints the contents of a ScrollableText control on a dialog.</td></row>
 		<row><td>ISRunSetupTypeAddLocalEvent</td><td>1</td><td>ISExpHlp.dll</td><td>RunSetupTypeAddLocalEvent</td><td/><td>Run the AddLocal events associated with the Next button on the Setup Type dialog.</td></row>
 		<row><td>ISSelfRegisterCosting</td><td>1</td><td>ISSELFREG.DLL</td><td>ISSelfRegisterCosting</td><td/><td/></row>
 		<row><td>ISSelfRegisterFiles</td><td>3073</td><td>ISSELFREG.DLL</td><td>ISSelfRegisterFiles</td><td/><td/></row>
 		<row><td>ISSelfRegisterFinalize</td><td>1</td><td>ISSELFREG.DLL</td><td>ISSelfRegisterFinalize</td><td/><td/></row>
+		<row><td>ISSetAllUsers</td><td>257</td><td>SetAllUsers.dll</td><td>SetAllUsers</td><td/><td/></row>
 		<row><td>ISUnSelfRegisterFiles</td><td>3073</td><td>ISSELFREG.DLL</td><td>ISUnSelfRegisterFiles</td><td/><td/></row>
 		<row><td>LaunchProgramFileFromSetupCompleteSuccess</td><td>1</td><td>NewBinary19</td><td>LaunchProgram</td><td/><td/></row>
 		<row><td>SetARPINSTALLLOCATION</td><td>51</td><td>ARPINSTALLLOCATION</td><td>[INSTALLDIR]</td><td/><td/></row>
@@ -1177,7 +1178,6 @@
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
-		<row><td>newfolder1</td><td>StartupFolder</td><td>##ID_STRING12##</td><td/><td>1</td><td/></row>
 	</table>
 
 	<table name="DrLocator">
@@ -2621,7 +2621,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>-1910236020</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>161860654</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-719008533</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-719008533</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>-719008533</td></row>
@@ -3725,14 +3725,13 @@
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-719008533</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-719006485</td></row>
 		<row><td>ID_STRING10</td><td>1033</td><td>Craig Thomson</td><td>0</td><td/><td>-719051412</td></row>
-		<row><td>ID_STRING11</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-1197093877</td></row>
-		<row><td>ID_STRING12</td><td>1033</td><td>BENCHM~2|Benchmark Electronics-CT Software</td><td>0</td><td/><td>153439304</td></row>
+		<row><td>ID_STRING11</td><td>1033</td><td>Splits</td><td>0</td><td/><td>832943469</td></row>
 		<row><td>ID_STRING13</td><td>1033</td><td>Splits</td><td>0</td><td/><td>153463880</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.BenchmarkElectronics,Inc-CraigThomson.com</td><td>0</td><td/><td>-1910236020</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>-1910236020</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.BenchmarkElectronics,Inc-CraigThomson.com</td><td>0</td><td/><td>161860654</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>161860654</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>LAUNCH~1.EXE|Launch BOMSplitter.exe</td><td>0</td><td/><td>-719022581</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>Split Utility for BEI Configuration Dept. - written by Craig Thomson - 2016</td><td>0</td><td/><td>-719036404</td></row>
-		<row><td>ID_STRING6</td><td>1033</td><td>craig.thomson@bench.com</td><td>0</td><td/><td>-1910236020</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>craig.thomson@bench.com</td><td>0</td><td/><td>161860654</td></row>
 		<row><td>ID_STRING7</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-719004980</td></row>
 		<row><td>ID_STRING8</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-719035668</td></row>
 		<row><td>ID_STRING9</td><td>1033</td><td>x7147</td><td>0</td><td/><td>-719057556</td></row>
@@ -3854,9 +3853,9 @@
 		<row><td>BOMSplitter.exe1_E2EDCEC063D14E6D8377F7569DEB54FD.exe</td><td/><td>[INSTALLDIR]Splits.ico</td><td>0</td></row>
 		<row><td>BOMSplitter.exe_5481AF30A11B4C018CD4272AF3FC3E07.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>BOMSplitter.exe_69B78D432FF74285945646EEB4D75767.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>NewShortcut111_620716A32F6F47839A394045D9B7E3C8.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
 		<row><td>NewShortcut11_3E4F0A5276CF49EC84F0475B3FDADE34.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
-		<row><td>NewShortcut3_C4CF423A55AE4D4DB626D7ED9CDC2136.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
+		<row><td>NewShortcut1_9CECA23EE67E4858A8344E556D8D1BE5.exe</td><td/><td>D:\coding\icons\Splits.ico</td><td>0</td></row>
+		<row><td>_E5D557A360F543F19071A10C2D5D57B8.exe</td><td/><td>C:\Users\thomsc\Documents\Visual Studio 2015\Projects\BOMSplitter\BOMSplitter\bin\Release\Splits.exe</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -3897,11 +3896,12 @@
 		<row><td>DuplicateFiles</td><td/><td>4210</td><td>DuplicateFiles</td><td/></row>
 		<row><td>FileCost</td><td/><td>900</td><td>FileCost</td><td/></row>
 		<row><td>FindRelatedProducts</td><td>NOT ISSETUPDRIVEN</td><td>420</td><td>FindRelatedProducts</td><td/></row>
-		<row><td>ISPreventDowngrade</td><td>ISFOUNDNEWERPRODUCTVERSION</td><td>450</td><td>ISPreventDowngrade</td><td/></row>
+		<row><td>ISPreventDowngrade</td><td>ISFOUNDNEWERPRODUCTVERSION</td><td>450</td><td/><td/></row>
 		<row><td>ISRunSetupTypeAddLocalEvent</td><td>Not Installed And Not ISRUNSETUPTYPEADDLOCALEVENT</td><td>1050</td><td>ISRunSetupTypeAddLocalEvent</td><td/></row>
 		<row><td>ISSelfRegisterCosting</td><td/><td>2201</td><td/><td/></row>
 		<row><td>ISSelfRegisterFiles</td><td/><td>5601</td><td/><td/></row>
 		<row><td>ISSelfRegisterFinalize</td><td/><td>6601</td><td/><td/></row>
+		<row><td>ISSetAllUsers</td><td>Not Installed</td><td>10</td><td/><td/></row>
 		<row><td>ISUnSelfRegisterFiles</td><td/><td>2202</td><td/><td/></row>
 		<row><td>InstallFiles</td><td/><td>4000</td><td>InstallFiles</td><td/></row>
 		<row><td>InstallFinalize</td><td/><td>6600</td><td>InstallFinalize</td><td/></row>
@@ -3933,7 +3933,7 @@
 		<row><td>RegisterUser</td><td/><td>6000</td><td>RegisterUser</td><td/></row>
 		<row><td>RemoveDuplicateFiles</td><td/><td>3400</td><td>RemoveDuplicateFiles</td><td/></row>
 		<row><td>RemoveEnvironmentStrings</td><td/><td>3300</td><td>RemoveEnvironmentStrings</td><td/></row>
-		<row><td>RemoveExistingProducts</td><td/><td>1410</td><td>RemoveExistingProducts</td><td/></row>
+		<row><td>RemoveExistingProducts</td><td/><td>6601</td><td>RemoveExistingProducts</td><td/></row>
 		<row><td>RemoveFiles</td><td/><td>3500</td><td>RemoveFiles</td><td/></row>
 		<row><td>RemoveFolders</td><td/><td>3600</td><td>RemoveFolders</td><td/></row>
 		<row><td>RemoveIniValues</td><td/><td>3100</td><td>RemoveIniValues</td><td/></row>
@@ -4018,7 +4018,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ExecuteAction</td><td/><td>1300</td><td>ExecuteAction</td><td/></row>
 		<row><td>FileCost</td><td/><td>900</td><td>FileCost</td><td/></row>
 		<row><td>FindRelatedProducts</td><td/><td>430</td><td>FindRelatedProducts</td><td/></row>
-		<row><td>ISPreventDowngrade</td><td>ISFOUNDNEWERPRODUCTVERSION</td><td>450</td><td>ISPreventDowngrade</td><td/></row>
+		<row><td>ISPreventDowngrade</td><td>ISFOUNDNEWERPRODUCTVERSION</td><td>450</td><td/><td/></row>
+		<row><td>ISSetAllUsers</td><td>Not Installed</td><td>10</td><td/><td/></row>
 		<row><td>InstallWelcome</td><td>Not Installed</td><td>1210</td><td>InstallWelcome</td><td/></row>
 		<row><td>IsolateComponents</td><td/><td>950</td><td>IsolateComponents</td><td/></row>
 		<row><td>LaunchConditions</td><td>Not Installed</td><td>410</td><td>LaunchConditions</td><td/></row>
@@ -4368,9 +4369,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[ProgramFilesFolder]Splits\BOMSplitter.exe</td><td/></row>
-		<row><td>ProductCode</td><td>{486EF1E1-E7CE-4274-8F77-C183FD0E36FE}</td><td/></row>
+		<row><td>ProductCode</td><td>{25008F34-204D-4855-9BCA-D431454CB101}</td><td/></row>
 		<row><td>ProductName</td><td>Splits</td><td/></row>
-		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
+		<row><td>ProductVersion</td><td>1.4.0.0</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4383,7 +4384,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>SERIALNUMBER</td><td/><td/></row>
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
 		<row><td>SHOWLAUNCHPROGRAM</td><td>-1</td><td/></row>
-		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR</td><td/></row>
+		<row><td>SecureCustomProperties</td><td>USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;ISACTIONPROP1</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
 		<row><td>UpgradeCode</td><td>{EE7B1A1F-52F2-4312-9327-2654C330736B}</td><td/></row>
@@ -4446,7 +4447,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>NewShortcut3</td><td>BOMSplitter.Primary_output</td><td/><td>newfolder1</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4532,9 +4532,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>NewShortcut1</td><td>StartMenuFolder</td><td>##ID_STRING11##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut1_9CECA23EE67E4858A8344E556D8D1BE5.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 		<row><td>NewShortcut11</td><td>DesktopFolder</td><td>##ID_STRING8##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut11_3E4F0A5276CF49EC84F0475B3FDADE34.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>NewShortcut111</td><td>StartupFolder</td><td>##ID_STRING11##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut111_620716A32F6F47839A394045D9B7E3C8.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>NewShortcut3</td><td>newfolder1</td><td>##ID_STRING13##</td><td>BOMSplitter.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td>NewShortcut3_C4CF423A55AE4D4DB626D7ED9CDC2136.exe</td><td>0</td><td>1</td><td>INSTALLDIR</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
@@ -4656,7 +4655,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">Remove</col>
 		<col def="s72">ActionProperty</col>
 		<col def="S72">ISDisplayName</col>
-		<row><td>{00000000-0000-0000-0000-000000000000}</td><td>***ALL_VERSIONS***</td><td></td><td></td><td>2</td><td/><td>ISFOUNDNEWERPRODUCTVERSION</td><td>ISPreventDowngrade</td></row>
+		<row><td>{EE7B1A1F-52F2-4312-9327-2654C330736B}</td><td>1.00.0000</td><td>1.3.0.0</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP1</td><td>Upgrade1.2ifPresent</td></row>
 	</table>
 
 	<table name="Verb">

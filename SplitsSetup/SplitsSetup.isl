@@ -3727,11 +3727,11 @@
 		<row><td>ID_STRING10</td><td>1033</td><td>Craig Thomson</td><td>0</td><td/><td>-719051412</td></row>
 		<row><td>ID_STRING11</td><td>1033</td><td>Splits</td><td>0</td><td/><td>832943469</td></row>
 		<row><td>ID_STRING13</td><td>1033</td><td>Splits</td><td>0</td><td/><td>153463880</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.BenchmarkElectronics,Inc-CraigThomson.com</td><td>0</td><td/><td>161860654</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.BenchmarkElectronics,Inc-CraigThomson.com</td><td>0</td><td/><td>1378162093</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Benchmark Electronics, Inc - Craig Thomson</td><td>0</td><td/><td>161860654</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>LAUNCH~1.EXE|Launch BOMSplitter.exe</td><td>0</td><td/><td>-719022581</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>Split Utility for BEI Configuration Dept. - written by Craig Thomson - 2016</td><td>0</td><td/><td>-719036404</td></row>
-		<row><td>ID_STRING6</td><td>1033</td><td>craig.thomson@bench.com</td><td>0</td><td/><td>161860654</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>craig.thomson@bench.com</td><td>0</td><td/><td>1378162093</td></row>
 		<row><td>ID_STRING7</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-719004980</td></row>
 		<row><td>ID_STRING8</td><td>1033</td><td>LAUNCH~1|Launch Splits</td><td>0</td><td/><td>-719035668</td></row>
 		<row><td>ID_STRING9</td><td>1033</td><td>x7147</td><td>0</td><td/><td>-719057556</td></row>
@@ -4371,7 +4371,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[ProgramFilesFolder]Splits\BOMSplitter.exe</td><td/></row>
 		<row><td>ProductCode</td><td>{25008F34-204D-4855-9BCA-D431454CB101}</td><td/></row>
 		<row><td>ProductName</td><td>Splits</td><td/></row>
-		<row><td>ProductVersion</td><td>1.4.0.0</td><td/></row>
+		<row><td>ProductVersion</td><td>1.4.1.0</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4655,7 +4655,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">Remove</col>
 		<col def="s72">ActionProperty</col>
 		<col def="S72">ISDisplayName</col>
-		<row><td>{EE7B1A1F-52F2-4312-9327-2654C330736B}</td><td>1.00.0000</td><td>1.3.0.0</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP1</td><td>Upgrade1.2ifPresent</td></row>
+		<row><td>{EE7B1A1F-52F2-4312-9327-2654C330736B}</td><td>1.00.0000</td><td>1.4.0.0</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP1</td><td>Upgrade1.2ifPresent</td></row>
 	</table>
 
 	<table name="Verb">

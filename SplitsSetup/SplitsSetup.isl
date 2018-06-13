@@ -4371,7 +4371,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[ProgramFilesFolder]Splits\BOMSplitter.exe</td><td/></row>
 		<row><td>ProductCode</td><td>{25008F34-204D-4855-9BCA-D431454CB101}</td><td/></row>
 		<row><td>ProductName</td><td>Splits</td><td/></row>
-		<row><td>ProductVersion</td><td>1.4.1.0</td><td/></row>
+		<row><td>ProductVersion</td><td>1.5.0.0</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4655,7 +4655,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">Remove</col>
 		<col def="s72">ActionProperty</col>
 		<col def="S72">ISDisplayName</col>
-		<row><td>{EE7B1A1F-52F2-4312-9327-2654C330736B}</td><td>1.00.0000</td><td>1.4.0.0</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP1</td><td>Upgrade1.2ifPresent</td></row>
+		<row><td>{EE7B1A1F-52F2-4312-9327-2654C330736B}</td><td>1.00.0000</td><td>1.4.9.0</td><td>1033</td><td>768</td><td/><td>ISACTIONPROP1</td><td>Upgrade1.2ifPresent</td></row>
 	</table>
 
 	<table name="Verb">

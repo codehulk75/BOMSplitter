@@ -127,7 +127,7 @@ namespace BOMSplitter
                 m_OutputBOM = ArrayToDataTable(rdr.ValueArray);
                 m_OutputBOM.TableName = "BOM";
                 SplitAndRejoinBOMNotes(m_OutputBOM);
-                m_AssemblyNumber = m_OutputBOM.Rows[1][1].ToString();
+                m_AssemblyNumber = m_OutputBOM.Rows[4][1].ToString();
                 GetBOMParts(); //Populate list of BOMItems with only lines from BOM that are in the 'Part' category
             }
         }
@@ -188,11 +188,11 @@ namespace BOMSplitter
 
         private object[,] DataTableToArray(System.Data.DataTable dt)
         {
-            int dataStart = 7;
-            int dataEnd = dt.Rows.Count - 5;
-            int headAndFoot = 12;
+            int dataStart = 9;
+            int dataEnd = dt.Rows.Count;
+            int headAndFoot = 8;
             int importColCount = 7;
-            int rowDelta = 6;
+            int rowDelta = 8;
             object[,] arr = new object[dt.Rows.Count - headAndFoot, importColCount];
             arr[0, 0] = "PARENT NO";
             arr[0, 1] = "CHILD NO";
